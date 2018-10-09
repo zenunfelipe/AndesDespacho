@@ -1,0 +1,77 @@
+<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-calm">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+      </ion-nav-buttons>
+
+      <ion-nav-buttons side="right">
+        <!--<button class="button button-picking button-balanced icon ion-calculator header-qty" ng-if="$root.viendoDetalle == 1" ng-click="$root.calculator();"></button> -->
+        <input 
+        ng-show="$root.viendoDetalle == 1"
+        class="custom_qty"
+        ng-model="$root.custom_qty" 
+        peanuthub-custom-keyboard 
+        keyboard-options="{keyboard:'CUSTOM_SKU', doneText: 'Cambiar', cleanTextOnClick: true, enableWAI:true, theme:'dark'}" 
+        keyboard-on-done-keypress="onCustomKeyboard" 
+        type="text" 
+        id="custom_qty_wc"
+        placeholder="" />
+
+        <button ng-click="openNotification();" class="button button-icon button-clear icon ion-chatbubble" ng-if="$root.viendoDetalle == 1"><div class="notification-bubble">{{$root.notificaciones}}</div></button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+
+    <ion-nav-view name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left">
+    <ion-header-bar class="bar-calm header-bar">
+      <h1 class="title">Herramientas</h1>
+    </ion-header-bar>
+    <ion-content class="infobox">
+      
+      <ion-list>
+        <div class="item item-divider">
+	       <!--<button class="button button-stable" ng-click="cambiarSacador();">
+	  		   Consultar código
+			   </button>-->
+        </div>
+        <ion-item>
+          
+        </ion-item>
+      </ion-list>
+
+    </ion-content>
+    <ion-footer-bar>
+    <!--<button class="button button-stable" ng-click="cambiarSacador();">
+  		Cambiar sacador
+		</button>-->
+    </ion-footer-bar>
+  </ion-side-menu>
+  
+  <!--
+  <ion-side-menu side="right">
+    <ion-header-bar class="bar-assertive header-bar">
+      <h1 class="title">Configuración</h1>
+    </ion-header-bar>
+    <ion-content class="infobox">
+      
+      <ion-list>
+        <div class="item item-divider">
+          <b>Ambiente</b>
+        </div>
+        <ion-item>
+          <select ng-model="$root.supervisor.ambiente" class="item">
+            <option value="prod">Producción</option>
+            <option value="test">Tester</option>
+          </select>
+        </ion-item>
+      </ion-list>
+
+    </ion-content>
+  </ion-side-menu>
+  -->
+</ion-side-menus>

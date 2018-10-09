@@ -1,0 +1,112 @@
+<ion-view view-title="Pedido #{{pedido.NroDocumento}}">
+  <ion-header-bar class="bar bar-subheader detalle-subheader">
+    <div class="row">
+     <div class="col-80 item-text-wrap">
+       <strong>{{(pedido.ComentariosSacador == '' ? 'Sin comentarios' : pedido.ComentariosSacador)}}</strong>
+     </div>
+     <div class="col-20 text-right">
+		<button class="button button-picking button-assertive icon ion-trash-a" ng-click="readDelete();"></button>  
+     </div>
+    </div>
+  </ion-header-bar>
+  <ion-content class="pedido" on-swipe-right="onSwipeRight($event)" on-swipe-left="onSwipeLeft($event)">
+    <div class="list" ng-if="calculatorActive == 1">
+        <h3>Ingrese cantidad y escanee articulo</h3>
+        <!--
+        <input 
+        class="custom_qty"
+        ng-model="$root.custom_qty" 
+        peanuthub-custom-keyboard 
+        keyboard-options="{keyboard:'CUSTOM_SKU', doneText: 'Ocultar', cleanTextOnClick: true, enableWAI:true, theme:'dark'}" 
+        keyboard-on-done-keypress="onCustomKeyboard" 
+        type="text" 
+        id="custom_qty_wc"
+        placeholder="" />
+        -->
+        <input id="custom_qty_wc" ng-model="$root.custom_qty" type="tel" name="custom_qty_wc" class="custom_qty" />
+    </div>
+    <div class="list" ng-if="calculatorActive == 0">
+
+      <a class="card has-nothing item item-text-wrap" href="#" ng-if="detalle.length == 0">
+        Pedido sin lineas, si está completado el picking presione terminar
+      </a>
+
+      <a href="#" class="item item-linea item-text-wrap" ng-repeat="linea in detalle"> <!-- ng-click=""  -->
+        <div class="row row-one">
+          <div class="col-33">
+            <span class="linea-idarticulo">{{linea.IDArticulo}}</span>
+          </div>
+          <div class="col-33">
+            <span class="linea-head-info">solicitado</span>
+            <span class="linea-cantidad">{{linea.Cantidad}}</span>
+          </div>
+          <div class="col-33">
+            
+            <div class="row" ng-if="$root.sacador.NombreSacador == 'Oficina'">
+              <div class="col-50">
+                <span class="linea-head-info {{(linea.CantidadPicking < linea.Cantidad ? 'pending' : '')}}">llevas</span>
+                <span class="linea-cantidadpicking {{(linea.CantidadPicking < linea.Cantidad ? 'pending' : '')}}">{{linea.CantidadPicking}}</span>
+              </div>
+              <div class="col-50">
+                <button class="button button-picking button-royal icon ion-wand" ng-click="magic(linea.IDArticulo, linea.Cantidad);"></button>  
+              </div>
+              
+            </div>
+            <div class="row" ng-if="$root.sacador.NombreSacador != 'Oficina'">            
+              <div class="col">
+                <span class="linea-head-info {{(linea.CantidadPicking < linea.Cantidad ? 'pending' : '')}}">llevas</span>
+                <span class="linea-cantidadpicking {{(linea.CantidadPicking < linea.Cantidad ? 'pending' : '')}}">{{linea.CantidadPicking}}</span>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        <div class="row row-two">
+          <div class="col">
+            <span class="linea-nombre">{{linea.Nombre}}</span>
+          </div>
+        </div>
+        <div class="row row-three">
+          <div class="col-25">
+            <span class="linea-pasillo">Pasillo {{linea.Pasillo}}</span>
+          </div>
+          <div class="col-25">
+            <span class="linea-lado">Lado {{linea.Lado}}</span>
+          </div>
+          <div class="col-25">
+            <span class="linea-columna">Col. {{linea.Columna}}</span>
+          </div>
+          <div class="col-25">
+            <span class="linea-fila">Fila {{linea.Fila}}</span>
+          </div>
+          
+        </div>
+        <div class="row row-three" ng-if="linea.DescripcionColor != ''">
+          <div class="col">
+           Color: {{linea.DescripcionColor}}
+          </div>
+        </div>
+        <!--<div class="linea-linea">{{linea.Linea}}</div>-->       
+        <div class="row row-four" ng-if="linea.Nota != ''">
+          <div class="col"><strong>Nota:</strong> <span class="linea-nota">{{linea.Nota}}</span></div>
+        </div>
+      </a>
+
+    </div>
+  </ion-content>
+
+  <ion-footer-bar class="bar-stable detalle-footer" style="height: 55px;">
+    <div class="row">
+      <div class="col col-67">
+        <strong>{{pedido.RazonSocial}}</strong>
+      </div>
+      <div class="col col-33 text-right">
+        <button class="button button-assertive" ng-click="ended()">
+          Terminar
+        </button>
+      </div>
+    </div>
+    
+  </ion-footer-bar>
+
+</ion-view>

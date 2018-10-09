@@ -1,0 +1,59 @@
+.titulo-rojo {
+	font-size: 25px;
+	padding: 10px;
+	color: red;
+	font-weight:bold;
+	text-align: center;
+}
+.titulo-verde {
+	font-size: 25px;
+	text-align: center;
+	padding: 10px;
+	color: green;
+	font-weight:bold;
+}
+.bulto {
+	margin-top: 20px;
+	font-size: 60px;
+	display: inline-block;
+	width: 33%;
+	text-align: center;
+	position: relative;
+}
+.cliente-idcliente { 
+	background-color: black; color:white; margin-top: 0px; margin-bottom: 10px; padding: 10px; font-size: 22px; font-weight: bold; padding-top:10px; padding-bottom:10px; text-align: center; 
+	position: fixed;	
+    width: 100%;
+    bottom: 31px;
+}
+.cliente-nombre { margin-top: 10px; padding: 10px; font-size: 18px; font-weight: normal;padding-top:0; padding-bottom:0; }
+.cliente-revisador { padding: 10px; font-size: 18px; font-weight: normal;padding-top:0; padding-bottom:0; }
+.headers {
+	padding: 10px;
+	font-size: 15px;
+}
+.bulto-off {
+	color: #808080;
+}
+.bulto-on {
+	color: green;
+}
+.bulto-on .bulto-over {
+	color: green;
+}
+.bulto-off .bulto-over {
+	color: red;
+}
+.bulto-over {
+	position: absolute;
+	top: 0;
+	right: 30px;
+	border-radius: 50%;
+	font-size: 15px;
+	font-weight: bold;
+	border: 2px solid black;
+	background-color: white;
+	padding: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+}

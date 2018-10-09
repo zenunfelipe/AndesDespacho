@@ -1,0 +1,96 @@
+<ion-view view-title="Andes - Despachadores">
+  <ion-content class="home" on-swipe-right="onSwipeRight($event)" on-swipe-left="onSwipeLeft($event)">
+      
+      <div ng-if="TipoRespuesta == 0">
+        <br /><br />
+        <h4 class="text-center">
+        <i class="fa fa-barcode fa-3x"></i>
+        <br /><br />
+        Lea un código de barras para comenzar
+        </h4>
+      </div>
+      
+      <div ng-if="TipoRespuesta == 1 || TipoRespuesta == 2 || TipoRespuesta == 3">
+        <div class="cliente-nombre">{{cabeza.RazonSocial}}</div>
+        <div class="cliente-revisador">Revisado por: {{cabeza.NombreRevisador}}</div>
+      </div>
+      <div ng-if="TipoRespuesta == 1">
+        <div class="titulo-rojo">Bultos por trasladar</div>
+        <div style="margin: auto; text-align: center; margin-bottom: 40px; margin-top: 40px; max-width: 90%; color:#808050;" ng-if="abiertos == 0"><h3>No hay bultos pendientes, presione terminar para continuar</h3></div>
+        <div ng-hide="bulto.IDEstado == 2" class="bulto bulto-off" ng-repeat="bulto in bultos">
+          <i class="fa fa-dropbox"></i>
+          <span class="bulto-over">{{bulto.NroBulto}}</span>
+        </div>
+        <div class="titulo-verde">Bultos trasladados</div>
+        <div ng-hide="bulto.IDEstado == 1" class="bulto bulto-on" ng-repeat="bulto in bultos">
+          <i class="fa fa-dropbox"></i>
+          <span class="bulto-over">{{bulto.NroBulto}}</span>
+        </div>
+      </div>
+
+
+      <div ng-if="TipoRespuesta == 2">
+        <div class="titulo-rojo">Facturas por recaudar</div>
+        <div style="margin: auto; text-align: center; margin-bottom: 40px; margin-top: 40px; max-width: 90%; color:#808050;" ng-if="facturasAbiertos == 0"><h3>No hay facturas pendientes</h3></div>
+        <div ng-hide="factura.SiEntregada == 1" class="bulto bulto-off" ng-repeat="factura in facturas">
+          <i class="fa fa-file-o"></i>
+          <span class="bulto-over">{{factura.NroDocumento}}</span>
+        </div>
+        <div class="titulo-verde">Facturas recaudadas</div>
+        <div ng-hide="factura.SiEntregada == 0" class="bulto bulto-on" ng-repeat="factura in facturas">
+          <i class="fa fa-file-o"></i>
+          <span class="bulto-over">{{factura.NroDocumento}}</span>
+        </div>
+      </div> 
+
+      <div ng-if="TipoRespuesta == 3">
+        <div style="background-color:#fffad0; color: black; font-size: 19px; padding: 5px; margin-top: 10px; margin-bottom: 0px;">
+          FACTURAS ASOCIADAS: <br />
+          <span ng-repeat="factura in facturas">
+            {{factura.Operacion}} - 
+          </span>
+        </div>
+        <div ng-if="TipoRespuesta == 3 && cabeza.UbicacionBultos != 'SIN'" style="color: black; padding:10px; font-weight: bold; text-align: center; font-size: 22px; background-color: #d8d7d7;">UBICACIÓN {{cabeza.UbicacionBultos}}</div>
+        <div ng-if="TipoRespuesta == 3 && cabeza.UbicacionBultos == 'SIN'" style="color: black; padding:10px; font-weight: bold; text-align: center; font-size: 22px; background-color: #d8d7d7;">NO UBICADO</div>
+
+        <div class="titulo-rojo">Bultos por entregar</div>
+        <div style="margin: auto; text-align: center; margin-bottom: 40px; margin-top: 40px; max-width: 90%; color:#808050;" ng-if="abiertosEntrega == 0"><h3>No hay bultos por entregar</h3></div>
+        <div ng-hide="bulto.IDEstado == 3" class="bulto bulto-off" ng-repeat="bulto in bultos">
+          <i class="fa fa-file-o"></i>
+          <span class="bulto-over">{{bulto.NroBulto}}</span>
+        </div>
+        <div class="titulo-verde">Bultos entregados</div>
+        <div ng-hide="bulto.IDEstado < 3" class="bulto bulto-on" ng-repeat="bulto in bultos">
+          <i class="fa fa-file-o"></i>
+          <span class="bulto-over">{{bulto.NroBulto}}</span>
+        </div>
+      </div> 
+
+      <!-- fake button -->
+      <!--
+      <div style="margin-top: 40px; text-align: center; margin-bottom: 40px;">
+        <button ng-click="fake()">Fake</button>
+      </div>
+      -->
+    <div class="cliente-idcliente">
+      <span ng-if="TipoRespuesta == 1 || TipoRespuesta == 2 || TipoRespuesta == 3">PEDIDO N&deg; {{cabeza.NroDocumento}}</span>
+      <span ng-if="TipoRespuesta == 0">ESPERANDO...</span>
+    </div>
+  </ion-content>
+  <ion-footer-bar class="bar-stable" style="height: 75px;">
+    <div class="row" style="padding:0;">
+      <div class="col col-33">
+        <button ng-if="TipoRespuesta == 1" class="button button-assertive" ng-click="cancelarEtapa(16)">Cancelar</button>
+        <button ng-if="TipoRespuesta == 2 || TipoRespuesta == 3" class="button button-assertive" ng-click="cancelarEtapa(15)">Cancelar</button>
+      </div>
+      <div class="col col-33" style="padding-top: 10px; text-align:center;">
+        <strong>Despachador: {{$root.despachador.NombreSacador}}</strong>
+      </div>
+      <div class="col col-33 text-right">
+        <button ng-if="CanEndEtapa1 == 1 && TipoRespuesta == 1" class="button button-positive" ng-click="ubicar()">Dar ubicación</button>
+        <button ng-if="facturasAbiertos == 0 && TipoRespuesta == 3 && abiertosEntrega == 0" class="button button-positive" ng-click="endEtapa(7,5)">Terminar</button>
+      </div>
+    </div>
+    
+  </ion-footer-bar>
+</ion-view>
