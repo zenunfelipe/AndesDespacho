@@ -8,6 +8,7 @@ angular.module('andes.controllers', [])
 })
 .controller('HomeCtrl', function($scope, $state, $rootScope, $localStorage, $location, $timeout, $ionicLoading, $ionicPopup) {
   $rootScope.esperando = 0;
+  $scope.esperandoPop = null;
   $scope.$on('$ionicView.enter', function(obj, viewData){
     $scope.TipoRespuesta = 0;
     $scope.cabeza = null;
@@ -34,7 +35,7 @@ angular.module('andes.controllers', [])
   };
   $scope.ubicar = function() {
    $rootScope.esperando = 1;
-   var confirmPopup = $ionicPopup.confirm({
+   $scope.esperandoPop = $ionicPopup.confirm({
      title: 'Ubicar',
      template: 'Esperando ubicacion',
      buttons: [
@@ -165,6 +166,7 @@ angular.module('andes.controllers', [])
 
         if (args.data.data.length == 4) {
           $rootScope.esperando = 0;
+          $scope.esperandoPop.close();
           if (window.cordova) { window.cordova.plugins.honeywell.disableTrigger(() => console.info('trigger disabled')); }
           $rootScope.showload();
 

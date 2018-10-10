@@ -65,6 +65,7 @@
           <span class="bulto-over">{{bulto.NroBulto}}</span>
         </div>
       </div> 
+      
 
       <!-- fake button -->
       <!--
@@ -72,11 +73,12 @@
         <button ng-click="fake()">Fake</button>
       </div>
       -->
-    <div class="cliente-idcliente">
-      <span ng-if="TipoRespuesta == 1 || TipoRespuesta == 2 || TipoRespuesta == 3">PEDIDO N&deg; {{cabeza.NroDocumento}}</span>
-      <span ng-if="TipoRespuesta == 0">ESPERANDO...</span>
-    </div>
+    <br><br><br><br><br>
   </ion-content>
+  <div class="cliente-idcliente">
+    <span ng-if="TipoRespuesta == 1 || TipoRespuesta == 2 || TipoRespuesta == 3">PEDIDO N&deg; {{cabeza.NroDocumento}}</span>
+    <span ng-if="TipoRespuesta == 0">ESPERANDO...</span>
+  </div>
   <ion-footer-bar class="bar-stable" style="height: 75px;">
     <div class="row" style="padding:0;">
       <div class="col col-33">
