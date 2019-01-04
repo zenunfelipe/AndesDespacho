@@ -7,6 +7,8 @@ angular.module('andes.controllers', [])
 
 })
 .controller('HomeCtrl', function($scope, $state, $rootScope, $localStorage, $location, $timeout, $ionicLoading, $ionicPopup) {
+
+  window._fake = $scope;
   $rootScope.esperando = 0;
   $scope.esperandoPop = null;
   $scope.$on('$ionicView.enter', function(obj, viewData){
@@ -61,6 +63,26 @@ angular.module('andes.controllers', [])
      ]
     });
 
+  }
+
+  $scope.imprimirBulto = function(AnnoProceso, IDOperacion, Correlativo, iBulto) {
+    $rootScope.showload();
+    jQuery.post($localStorage.app.rest+"/despachadores.php?op=imprimirBulto", { 
+      IDOperacion: IDOperacion, 
+      AnnoProceso: AnnoProceso,
+      Correlativo: Correlativo,
+      iBulto: iBulto
+    }, function(data) {
+      $rootScope.hideload();
+      if (data.res == "ERR") {
+        $rootScope.err(data.msg);
+      } else {
+
+      }
+    },"json").fail(function() {
+      $rootScope.hideload();
+      $rootScope.err("Fallo al imprimir");
+    });
   }
   $scope.endEtapa = function(IDEtapa,IDEstado) {
     $rootScope.confirmar("¿Estás seguro de terminar?", function() { 

@@ -1,12 +1,43 @@
 app = {
-  rest:  "http://186.67.74.115:8085/bodega"
+  rest:  "http://186.67.20.164:8050/bodega"
 };
 var printers = [];
 var popupwifi = null;
 var popupqty = null;
 var WifiWizard2 = null;
 angular.module('andes', ['ionic', 'andes.controllers','ngStorage','peanuthub-custom-keyboard'])
+.directive('iosDblclick',function () {
 
+  const DblClickInterval = 300; //milliseconds
+
+  var firstClickTime;
+  var waitingSecondClick = false;
+
+  return {
+      restrict: 'A',
+      link: function (scope, element, attrs) {
+          element.bind('click', function (e) {
+
+              if (!waitingSecondClick) {
+                  firstClickTime = (new Date()).getTime();
+                  waitingSecondClick = true;
+
+                  setTimeout(function () {
+                      waitingSecondClick = false;
+                  }, DblClickInterval);
+              }
+              else {
+                  waitingSecondClick = false;
+
+                  var time = (new Date()).getTime();
+                  if (time - firstClickTime < DblClickInterval) {
+                      scope.$apply(attrs.iosDblclick);
+                  }
+              }
+          });
+      }
+  };
+})
 .run(function($ionicPlatform, $rootScope, $ionicHistory, $timeout, $state, $localStorage, $ionicPopup, $ionicLoading) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
