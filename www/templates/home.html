@@ -17,12 +17,12 @@
       <div ng-if="TipoRespuesta == 1">
         <div class="titulo-rojo">Bultos por trasladar ({{abiertos}})</div>
         <div style="margin: auto; text-align: center; margin-bottom: 40px; margin-top: 40px; max-width: 90%; color:#808050;" ng-if="abiertos == 0"><h3>No hay bultos pendientes, presione terminar para continuar</h3></div>
-        <div ng-hide="bulto.IDEstado == 2" class="bulto bulto-off" ng-repeat="bulto in bultos">
+        <div ng-hide="bulto.IDEstado == 2" class="bulto bulto-off" ng-repeat="bulto in bultos" ios-dblclick="imprimirBulto(cabeza.AnnoProceso,cabeza.IDOperacion,cabeza.Correlativo,bulto.NroBulto)">
           <i class="fa fa-dropbox"></i>
           <span class="bulto-over">{{bulto.NroBulto}}</span>
         </div>
         <div class="titulo-verde">Bultos trasladados ({{(bultos.length - abiertos)}})</div>
-        <div ng-hide="bulto.IDEstado == 1" class="bulto bulto-on" ng-repeat="bulto in bultos">
+        <div ng-hide="bulto.IDEstado == 1" class="bulto bulto-on" ng-repeat="bulto in bultos" ios-dblclick="imprimirBulto(cabeza.AnnoProceso,cabeza.IDOperacion,cabeza.Correlativo,bulto.NroBulto)">
           <i class="fa fa-dropbox"></i>
           <span class="bulto-over">{{bulto.NroBulto}}</span>
         </div>
